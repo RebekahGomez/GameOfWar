@@ -119,8 +119,50 @@ class gameOfWar {
   gameSetup() {
     const { cards } = new Deck()
     this.p1.push(...cards.splice(0, 26)) // this cuts the deck in half using .splice and pushes it to player 1 using the spread operator so the array will be spread out, not an array in an array
-    console.log(this.p1);
+    this.p2.push(...cards)
+  }
+
+  playGame() {
+    while (this.p1.length > 0 && this.p2.length > 0) {
+      let p1Card = this.p1.pop()
+      let p2Card = this.p2.pop()
+
+      if (p1Card.score === p2Card.score) {
+        this.pile.push(p1Card, p2Card)
+        this.war()
+      } else if (p1Card.score > p2Card.score) {
+        this.p1.unshift(p2Card, p1Card, ...this.pile) // .unshift adds the cards back to p1 pile -- not sure why, but we need to add the other player's card to the pile first, otherwise no one will win
+        this.pile.length = 0 // this mutates the original pile back to 0
+        console.log("Player 1 wins the round.");
+      } else {
+        this.p2.unshift(p1Card, p2Card, ...this.pile.splice(0)) // i think this also mutates the oringal pile back to 0, just a different way
+        console.log("Player 2 wins the round.");
+      }
+    }
+  }
+  war() {
+    console.log("War!!!")
+    if (this.p1.length < 4 || this.p2.length < 4) {
+      if (this.p1.length < 4) {
+        this.p2.push(...this.p1.splice(0), ...this.pile.splice(0))
+      } else {
+        this.p1.push(...this.p2.splice(0), ...this.pile.splice(0))
+      }
+    } else {
+      let p1WarPile = this.p1.splice(-3, 3)
+      let p2WarPile = this.p2.splice(-3, 3)
+      this.pile.push(...p1WarPile, ...p2WarPile)
+    }
   }
 }
 
 const game = new gameOfWar()
+game.playGame();
+
+// This needs to go somewhere in the code above.
+// if (this.p1.length > 0) {
+//   console.log(`Player 1 is the winner! Player 1 has ${this.pile.length} cards.`)
+// } else {
+//   if (this.p2.length > 0) {
+//     console.log(`Player 2 is the winner! Player 2 has ${this.pile.length} cards.`)
+//   }
