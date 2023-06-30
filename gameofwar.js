@@ -48,14 +48,6 @@
 // Task 8: The game ends when one player has all the cards and the other player has zero.
 // Task 9: Declare the winner
 
-// ***My Game***
-
-// class Player {
-//   constructor() {
-//     this.hand = [];
-//     this.remainingCards = [];
-//   }
-// }
 
 class Card {
   constructor(suit, rank, score) {
@@ -98,16 +90,6 @@ class Deck {
 
 }
 
-// let player1 = new Player();
-// let player2 = new Player();
-
-// let deck = new Deck()
-// console.log(someDeck);
-
-// ***END MY GAME
-
-// ***start new code w/ Raul
-
 class gameOfWar {
   constructor() {
     this.p1 = []
@@ -139,7 +121,15 @@ class gameOfWar {
         console.log("Player 2 wins the round.");
       }
     }
+    if (this.p1.length > 0) {
+      console.log(`Player 1 is the winner! Player 1 has ${this.p1.length} cards.`)
+    } else {
+      if (this.p2.length > 0) {
+        console.log(`Player 2 is the winner! Player 2 has ${this.p2.length} cards.`)
+      }
+    }
   }
+
   war() {
     console.log("War!!!")
     if (this.p1.length < 4 || this.p2.length < 4) {
@@ -159,10 +149,3 @@ class gameOfWar {
 const game = new gameOfWar()
 game.playGame();
 
-// This needs to go somewhere in the code above.
-// if (this.p1.length > 0) {
-//   console.log(`Player 1 is the winner! Player 1 has ${this.pile.length} cards.`)
-// } else {
-//   if (this.p2.length > 0) {
-//     console.log(`Player 2 is the winner! Player 2 has ${this.pile.length} cards.`)
-//   }
